@@ -16,7 +16,7 @@ public: //Sınıfın üye fonksiyonları public olarak tanımlanmaktadır.
 	void kok_alma_islemi();
 	void logaritma_alma_islemi();
 	void trigonometrik_ıslem();
-    void cikis();
+        void cikis();
 }hm; //hm adında bir nesne oluşturulmaktadır.
 
 void HesapMakinesi::toplama_islemi() //1.Islem
