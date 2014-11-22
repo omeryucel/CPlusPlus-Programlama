@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 	int sayi;
-	cout <<"=Bir Tamsayiyi (1-999) Yaziyla Ekrana Yazdırma Programi=\n\n";
+	cout <<"=Bir Tamsayiyi (1-999) Yaziyla Ekrana Yazdirma Programi=\n\n";
 	cout <<"1 ile 999 Arasinda Bir Sayi Giriniz:"; 
 	cin >>sayi; //Sayı kullanıcıdan alınmaktadır.
 	if(sayi>=1 && sayi<=999) //Sayının 1 ile 999 arasında olup olmadığı kontrol edilmektedir.
