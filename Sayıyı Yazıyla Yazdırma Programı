@@ -1,0 +1,123 @@
+//Bu Program Klavyeden Girilen Bir Tam Sayıyı (1-999) Yazıyla Ekrana Yazdırır.
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	int sayi;
+	cout <<"=Bir Tam Sayiyi (1-999) Yaziyla Ekrana Yazdirma Programi=\n\n";
+	cout <<"1 ile 999 Arasinda Bir Sayi Giriniz:"; 
+	cin >>sayi; //Sayı kullanıcıdan alınmaktadır.
+	if(sayi>=1 && sayi<=999) //Sayının 1 ile 999 arasında olup olmadığı kontrol edilmektedir.
+	{
+		cout <<"\nGirilen Sayi:" <<sayi <<endl;
+		cout <<"Sayinin Okunusu:";
+		switch(sayi/100) //Girilen sayının yüzler basamağındaki rakam bulunduktan sonra ilgili rakam case ifadesiyle kontrol edilip, rakam yazıyla ekrana yazdırılmaktadır.   
+		{
+			case 0:
+				cout <<"";
+				break;
+			case 1:
+				cout <<"yuz";
+				break;
+			case 2:
+				cout <<"ikiyuz";
+				break;
+			case 3:
+				cout <<"ucyuz";
+				break;
+			case 4:
+				cout <<"dortyuz";
+				break;
+			case 5:
+				cout <<"besyuz";
+				break;
+			case 6:
+				cout <<"altıyuz";
+				break;
+			case 7:
+				cout <<"yediyuz";
+				break;
+			case 8:
+				cout <<"sekizyuz";
+				break;
+			case 9:
+				cout <<"dokuzyuz";
+				break;
+		}
+
+		switch( (sayi%100)/10 ) //Girilen sayının onlar basamağındaki rakam bulunduktan sonra ilgili rakam case ifadesiyle kontrol edilip, rakam yazıyla ekrana yazdırılmaktadır.
+		{
+			case 0:
+				cout <<"";
+				break;
+			case 1:
+				cout <<"on";
+				break;
+			case 2:
+				cout <<"yirmi";
+				break;
+			case 3:
+				cout <<"otuz";
+				break;
+			case 4:
+				cout <<"kirk";
+				break;
+			case 5:
+				cout <<"elli";
+				break;
+			case 6:
+				cout <<"altmis";
+				break;
+			case 7:
+				cout <<"yetmis";
+				break;
+			case 8:
+				cout <<"seksen";
+				break;
+			case 9:
+				cout <<"doksan";
+				break;
+		}
+
+		switch(sayi%10) //Girilen sayının birler basamağındaki rakam bulunduktan sonra ilgili rakam case ifadesiyle kontrol edilip, rakam yazıyla ekrana yazdırılmaktadır.
+		{
+			case 0:
+				cout <<"";
+				break;
+			case 1:
+				cout <<"bir";
+				break;
+			case 2:
+				cout <<"iki";
+				break;
+			case 3:
+				cout <<"uc";
+				break;
+			case 4:
+				cout <<"dort";
+				break;
+			case 5:
+				cout <<"bes";
+				break;
+			case 6:
+				cout <<"alti";
+				break;
+			case 7:
+				cout <<"yedi";
+				break;
+			case 8:
+				cout <<"sekiz";
+				break;
+			case 9:
+				cout <<"dokuz";
+				break;
+		}
+	}
+	else //Sayının 1 ile 999 arasında olmadığı durumda else yapısı çalışmaktadır.
+		cout <<"\nGirdiginiz Sayi 1 ile 999 Arasinda Degildir.";
+	cout <<"\n\n";
+	system("PAUSE");
+	return 0;
+}
