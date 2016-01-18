@@ -1,0 +1,37 @@
+//Bu Program  Kullanıcıya 3 Kere Şifre Girme Hakkı Sunar ve Kullanıcının Doğru Şifreyi Girmesiyle Kullanıcı Sisteme Giriş Yapmış Olur. 
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	int const sifre=2014; //Şifre isteğe bağlı olarak değiştirilebilir.
+	int girilensifre;
+	int hak=3; //Kullanıcıya şifreyi doğru girebilmesi için 3 hak verilmiştir.
+	cout <<"=Sifre Kontrol Programi=\n\n";
+	for(;;) //Sonsuz döngü oluşturulmuş ve bu döngüde kullanıcıdan 3 kere şifre girme hakkını kullanarak doğru şifreyi girmesi istenmektedir.
+	{
+		cout <<"Sisteme Giris Icin Sifreyi Giriniz:";
+		cin >>girilensifre;
+		cout <<"\n";
+		if(girilensifre==sifre) //Kullanıcının girdiği şifre ile sistemde kayıtlı olan şifre karşılaştırılmaktadır.
+		{
+			cout <<"Hosgeldiniz.Sisteme Giris Yaptiniz." <<endl;
+			break;
+		}
+		else if(hak>1)
+		{
+			hak--; //Yanlış şifre girilmesi halinde kullanıcının şifre girme hakkı her seferinde 1 azaltılmaktadır.
+			cout <<"Yanlis Sifre Girdiniz. Yeniden Deneyiniz. Kalan Hakkiniz: " <<hak <<endl;
+			continue;
+		}
+		else //Kullanıcının 3 hakkında da yanlış şifreyi girmesiyle else yapısı çalışmaktadır.
+		{
+			cout <<"Yanlis Sifre Girdiniz.Uzgunuz Sifre Girme Hakkiniz Doldu.\nDaha Sonra Tekrar Deneyiniz.";
+			break;
+		}
+	}
+	cout <<"\n\n";
+	system("PAUSE");
+    return 0;		
+}
