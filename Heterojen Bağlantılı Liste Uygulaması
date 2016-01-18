@@ -1,0 +1,102 @@
+//Bu Program Öğretmenlere ve Müdüre Ait Bilgileri Heterojen Bağlantılı Listeye Ekler ve Ekranda Gösterir.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Ogretmen //Ogretmen sınıfı.
+{
+	string ad,soyad; //Sınıfın private veri üyeleri.
+	int ogrenci_sayisi;
+	Ogretmen *sonraki;
+	friend class Heterojen_Liste; //Heterojen_Liste sınıfı arkadaş sınıf olarak kabul edilmektedir.
+public:
+	Ogretmen(string ad,string soyad,int ogrenci_sayisi) //Sınıf yapıcısı.
+	{
+		this->ad=ad; //Sınıfın private veri üyelerine değer atamaları yapılmaktadır.
+		this->soyad=soyad;
+		this->ogrenci_sayisi=ogrenci_sayisi;
+	}
+	virtual void yazdir() const //Öğretmen bilgileri ekrana yazdırılmaktadır.
+	{
+		cout <<"\n";
+		cout <<"Ad:" <<ad <<endl;
+		cout <<"Soyad:" <<soyad <<endl;
+		cout <<"Ogrenci Sayisi:" <<ogrenci_sayisi <<endl;
+	}
+};
+
+class Mudur:public Ogretmen //Mudur sınıfı, Ogretmen sınıfından türetilmektedir.
+{
+	string okul_adi; //Sınıfın private veri üyesi.
+public:
+	Mudur(string ad,string soyad,int ogrenci_sayisi,string okul_adi):Ogretmen(ad,soyad,ogrenci_sayisi) //Sınıf yapıcısı. Yapıcı başlatıcı ile Ogretmen sınıfının yapıcısı çağrılmaktadır.
+	{
+		this->okul_adi=okul_adi; //Sınıfın private veri üyesine değer ataması yapılmaktadır.
+	}
+	void yazdir() const //Müdür bilgileri ekrana yazdırılmaktadır.
+	{
+		cout <<"---------------------------------" <<endl;
+		cout <<"      -Mudure Ait Bilgiler-" <<endl;
+		Ogretmen::yazdir();
+		cout <<"Okul Adi:" <<okul_adi <<endl;
+		cout <<"---------------------------------" <<endl;
+	}
+};
+
+class Heterojen_Liste //Heterojen_Liste sınıfı.
+{
+	Ogretmen *liste_basi; //Ogretmen sınıfından liste_basi adlı bir nesne göstericisi oluşturulmaktadır.
+public:
+	Heterojen_Liste(); //Sınıfın üye fonksiyonları.
+	void ekle(Ogretmen *);
+	void yazdir();
+};
+
+Heterojen_Liste::Heterojen_Liste() //Sınıf yapıcısı.
+{
+	liste_basi=NULL; //liste_basi'nin adresine NULL değeri atanmaktadır.
+}
+
+void Heterojen_Liste::ekle(Ogretmen *ogrt) //Listeye veri ekleme fonksiyonu. 
+{
+	if(liste_basi!=NULL) //Listenin boş olmaması durumunda if yapısı çalışmaktadır.
+		ogrt->sonraki=liste_basi;
+	else 
+		ogrt->sonraki=NULL; //Listenin boş olması durumunda, eklenen veri listeye birinci veri olarak eklenmektedir.
+	liste_basi=ogrt; //ogrt adlı nesne göstericisinin adresi liste_basi'na atanmaktadır.
+}
+
+void Heterojen_Liste::yazdir() //Listedeki verileri ekrana yazdırma fonksiyonu.
+{
+	Ogretmen *gecici; //Ogretmen sınıfından gecici adlı bir nesne göstericisi oluşturulmaktadır.
+	if(liste_basi!=NULL) //Listenin boş olmaması durumunda if yapısı çalışmaktadır.
+	{
+		gecici=liste_basi; //liste_basi'nin adresi gecici adlı nesne göstericisine atanmaktadır.
+		while(gecici!=NULL) //Listede bulunan tüm veriler ekrana yazdırılmaktadır.
+		{
+			gecici->yazdir();
+			gecici=gecici->sonraki;
+		}
+	}
+	else
+		cout <<"Liste Bos!" <<endl;
+}
+
+int main()
+{
+	cout <<"=Heterojen Baglantili Liste Programi=\n" <<endl;
+	
+	Heterojen_Liste liste;
+	Ogretmen *ogrt1=new Ogretmen("Berna","Yildiz",90); //Ogretmen ve Mudur sınıflarından nesne göstericileri oluşturulmaktadır.
+	Ogretmen *ogrt2=new Ogretmen("Sevda","Sahin",60);
+	Mudur *m=new Mudur("Fahri","Yildirim",30,"Canakkale Anadolu Lisesi");
+	liste.ekle(ogrt1); //Öğretmen ve müdür bilgileri listeye eklenmektedir.
+	liste.ekle(ogrt2);
+	liste.ekle(m);
+	liste.yazdir(); //Öğretmen ve müdür bilgileri ekrana yazdırılmaktadır.
+
+	cout <<"\n";
+	system("PAUSE");
+	return 0;
+}
