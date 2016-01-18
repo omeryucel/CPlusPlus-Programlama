@@ -1,0 +1,41 @@
+//Bu Program Mutlak Değer Alma Programıdır.
+#include <iostream>
+
+using namespace std;
+
+template <class Tip> 
+Tip mutlak_deger(Tip sayi) //Şablon fonksiyonu oluşturulmaktadır.
+{
+	return sayi<0 ? -sayi:sayi; //Sayinin 0'dan küçük olması halinde -sayi değişkeni, aksi halde sayi değişkeni döndürülmektedir.
+}
+
+int main()
+{
+	cout <<"=Mutlak Deger Alma Programi=\n" <<endl;
+	int secim;
+	int int_sayi;
+	float float_sayi;
+	cout <<"-------------------" <<endl;
+	cout <<"(1) - Tam Sayi" <<endl;
+	cout <<"(2) - Rasyonel Sayi" <<endl;
+	cout <<"-------------------" <<endl;
+	cout <<"Gireceginiz Sayinin Turunu Seciniz:";
+	cin >>secim; //Kullanıcıdan seçimi alınmaktadır.
+	if(secim==1)
+	{
+		cout <<"\nMutlak Degeri Alinacak Sayiyi Giriniz:";
+		cin >>int_sayi; //Kullanıcıdan sayı alınmaktadır.
+		cout <<"\nGirilen Sayinin Mutlak Degeri:" <<mutlak_deger(int_sayi) <<endl; //Girilen sayının mutlak değeri ekrana yazdırılmaktadır.
+	}
+	else if(secim==2)
+	{
+		cout <<"\nMutlak Degeri Alinacak Sayiyi Giriniz:";
+		cin >>float_sayi; //Kullanıcıdan sayı alınmaktadır. 
+		cout <<"\nGirilen Sayinin Mutlak Degeri:" <<mutlak_deger(float_sayi) <<endl; //Girilen sayının mutlak değeri ekrana yazdırılmaktadır.
+	}
+	else
+		cout <<"\nBoyle Bir Islem Seceneginiz Bulunmamaktadir!" <<endl;
+	cout <<"\n";
+	system("PAUSE");
+	return 0;
+}	
