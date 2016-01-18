@@ -1,0 +1,145 @@
+//Bu Program Standard Template Library (STL) Kullanarak, Bir Liste Üzerinde İşlemler (Eleman Ekleme, Eleman Yazdırma ve Eleman Silme) Yapılabilmesini Sağlar. 
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+list <int> liste; //int tipinde, liste adında bir list oluşturulmaktadır.
+list <int>::iterator ptr; //list'e ptr adında bir iteratör tanımlanmaktadır. 
+
+void liste_basina_ekle() //Liste başına eleman ekleme fonksiyonu.
+{
+	cout <<"\n-Liste Basina Eleman Ekleme-" <<endl;
+	cout <<"----------------------------\n" <<endl;
+	int eleman;
+	cout <<"Listeye Eklemek Istediginiz Elemani Giriniz:";
+	cin >>eleman;
+	liste.push_front(eleman); //Kullanıcının istediği eleman liste başına eklenmektedir.
+}
+
+void liste_sonuna_ekle() //Liste sonuna eleman ekleme fonksiyonu.
+{
+	cout <<"\n-Liste Sonuna Eleman Ekleme-" <<endl;
+	cout <<"----------------------------\n" <<endl;
+	int eleman;
+	cout <<"Listeye Eklemek Istediginiz Elemani Giriniz:";
+	cin >>eleman;
+	liste.push_back(eleman); //Kullanıcının istediği eleman liste sonuna eklenmektedir.
+}
+
+void liste_basdan_yazdir() //Listeyi başdan sona yazdırma fonksiyonu.
+{
+	if(liste.empty()==true) //Listenin boş olması durumunda if yapısı çalışmaktadır.
+		cout <<"\nListede Eleman Bulunmamaktadir." <<endl;
+	else
+	{
+		cout <<"-Listede Bulunan Elemanlar-" <<endl;
+		cout <<"----------------------------" <<endl;
+		ptr=liste.begin();
+		while( ptr!=liste.end() ) 
+			cout <<*ptr++ <<"  "; //Listede bulunan elemanlar baştan sona ekrana yazdırılmaktadır.
+		cout <<endl;
+	}
+}
+
+void liste_sondan_yazdir() //Listeyi sondan başa yazdırma fonksiyonu.
+{
+	if(liste.empty()==true) //Listenin boş olması durumunda if yapısı çalışmaktadır.
+		cout <<"\nListede Eleman Bulunmamaktadir." <<endl;
+	else
+	{
+		cout <<"-Listede Bulunan Elemanlar-" <<endl;
+		cout <<"----------------------------" <<endl;
+		ptr=liste.end();
+		while( ptr!=liste.begin() )
+			cout <<*--ptr <<"  "; //Listede bulunan elemanlar sondan başa ekrana yazdırılmaktadır.
+		cout <<endl;
+	}
+}
+
+void listeden_eleman_sil() //Listeden eleman silme fonksiyonu.
+{
+	if(liste.empty()==true) //Listenin boş olması durumunda if yapısı çalışmaktadır.
+		cout <<"\nListede Eleman Bulunmamaktadir." <<endl;
+	else
+	{
+		cout <<"\n-Listeden Eleman Silme-" <<endl;
+		cout <<"-------------------------\n" <<endl;
+		int eleman;
+		cout <<"Listeden Silmek Istediginiz Elemani Giriniz:";
+		cin >>eleman;
+		liste.remove(eleman); //Kullanıcının istediği eleman silinmektedir.
+		system("CLS");
+	}
+}
+
+int main()
+{
+	int secim;
+	do
+	{
+		cout <<"\n =Liste Uzerinde Islem Programi=" <<endl;
+		cout <<"----------------------------------" <<endl;
+		cout <<"(1) - Liste Basina Eleman Ekleme" <<endl;
+		cout <<"(2) - Liste Sonuna Eleman Ekleme" <<endl;
+		cout <<"(3) - Listeyi Basdan Sona Yazdirma" <<endl;
+		cout <<"(4) - Listeyi Sondan Basa Yazdirma" <<endl;
+		cout <<"(5) - Listeden Eleman Silme" <<endl;
+		cout <<"(0) - Cikis" <<endl;
+		cout <<"----------------------------------" <<endl;
+		cout <<"Yapmak Istediginiz Islemi Seciniz:";
+		cin >>secim; //Kullanıcıdan seçimi alınmaktadır.
+		switch(secim) 
+		{
+			case 0:
+			{
+				secim=0;
+				system("CLS");
+				break;
+			}
+			case 1:
+			{
+				system("CLS");
+				liste_basina_ekle();
+				system("CLS");
+				break;
+			}
+			case 2:
+			{
+				system("CLS");
+				liste_sonuna_ekle();
+				system("CLS");
+				break;
+			}
+			case 3:
+			{
+				system("CLS");
+				liste_basdan_yazdir();
+				break;
+			}
+			case 4:
+			{
+				system("CLS");
+				liste_sondan_yazdir();
+				break;
+			}
+			case 5:
+			{
+				system("CLS");
+				listeden_eleman_sil();
+				break;
+			}
+			default:
+			{
+				system("CLS");
+				cout <<"\nHatali Secim Yaptiniz. Tekrar Secim Yapiniz." <<endl;
+				break;
+			}
+		}
+	}
+	while(secim!=0); //secim 0 olmadığı müddetçe döngü devam etmektedir.
+	
+	cout <<"\n";
+	system("PAUSE");
+	return 0;
+}
