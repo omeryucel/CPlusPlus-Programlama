@@ -1,0 +1,63 @@
+//Bu Program Tanımlanan Maksimum Boyuttan (Uzunluktan) Fazla Bir String İfade Girilmemesini Sağlamaktadır.
+//Burada Boyut (Uzunluk) Karakter Sayısını İfade Etmektedir.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class String //String sınıfı.
+{
+	char *str; //Sınıfın private veri üyeleri.
+	int boyut;
+	enum //Sabit tanımlaması için kullanılmaktadır.
+	{
+		maks_boyut=10
+	};
+public:
+	String(char *ifade) //Sınıf yapıcısı.
+	{
+		boyut=strlen(ifade); //Girilen ifadenin boyutu (uzunluğu) tespit edilmektedir.
+		if(boyut>maks_boyut) //Girilen ifadenin maksimum boyuttan fazla olup olmadığı tespit edilmektedir.
+			throw "\nGirdiginiz Ifadenin Boyutu Maksimum Boyuttan Fazla. Lutfen Tekrar Giriniz.";
+		str=new char[boyut+1]; //str değişkenine dinamik hafıza tahsisi yapılmaktadır. +1 string sonu karakterini ifade etmektedir.
+		strcpy(str,ifade); //str değişkenine parametre ile gelen ifade değişkeninin içeriği kopyalanmaktadır.
+	}
+	~String() //Sınıf yıkıcısı.
+	{
+		delete [] str;
+	}
+	void yazdir() const //İfade ve boyutu ekrana yazdırılmaktadır. 
+	{
+		cout <<"\nGirilen Ifade:" <<str <<endl;
+		cout <<"Ifadenin Boyutu:" <<boyut <<endl;
+	}
+};
+
+int main()
+{
+	cout <<"=String Ifadelerin Boyut Kontrol Programi=\n" <<endl;
+	String *string;
+	char girilen[20];
+	bool kosul;
+	do
+	{
+		kosul=false;
+		cout <<"Bir Ifade Giriniz:";
+		gets(girilen); //Kullanıcıdan string bir ifade alınmaktadır.
+		try //Programın çalışması esnasında hata olabileceği düşünülen kısım try bloğuna yerleştirilmektdir.
+		{
+			string=new String(girilen);
+		}
+		catch(const char *mesaj) //Herhangi bir hata ile karşılaşılması sonucu catch bloğuna girilmektedir.
+		{
+			cout <<mesaj <<endl; //throw ile fırlatılan hata açıklaması ekrana yazdırılmaktadır.
+			kosul=true;
+		}
+	}
+	while(kosul); //kosul=true olduğu müddetçe döngü devam etmektedir.
+	string->yazdir(); //Sınıfın yazdir fonksiyonu çağrılmaktadır.
+	delete string; //string için hafızada yer ayrılan bölge sisteme geri verilmektedir.
+	cout <<"\n";
+	system("PAUSE");
+	return 0;
+}
