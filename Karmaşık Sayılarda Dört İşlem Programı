@@ -1,0 +1,116 @@
+//Bu Program Karmaşık Sayılarda Dört İşlem Programıdır.
+#include <iostream>
+
+using namespace std;
+
+class KarmasikSayi //Karmaşık sayı sınıfı.
+{
+	int reel_kisim,sanal_kisim; //Sınıfın private veri üyeleri.
+public:
+	KarmasikSayi(int,int); //Sınıf yapıcısı.
+	KarmasikSayi operator + (const KarmasikSayi &); //(+) operatörünün aşırı yüklenmesi.
+	KarmasikSayi operator - (const KarmasikSayi &); //(-) operatörünün aşırı yüklenmesi.
+	KarmasikSayi operator * (const KarmasikSayi &); //(*) operatörünün aşırı yüklenmesi.
+	KarmasikSayi operator / (const KarmasikSayi &); //(/) operatörünün aşırı yüklenmesi.
+	KarmasikSayi& operator = (const KarmasikSayi &); //(=) operatörünün aşırı yüklenmesi.
+	friend ostream& operator << (ostream &,const KarmasikSayi &); //(<<) operatörünün aşırı yüklenmesi.
+};
+
+KarmasikSayi::KarmasikSayi(int reel=0,int sanal=0)
+{
+	reel_kisim=reel; //Sınıfın private veri üyelerine değer atamaları yapılmaktadır.
+	sanal_kisim=sanal;
+}
+
+KarmasikSayi KarmasikSayi::operator + (const KarmasikSayi &k) //Toplama işleminin gerçekleştirildiği fonksiyon.
+{
+	int reel,sanal;
+	reel=reel_kisim + k.reel_kisim;
+	sanal=sanal_kisim + k.sanal_kisim;
+	return KarmasikSayi(reel,sanal);
+}
+
+KarmasikSayi KarmasikSayi::operator - (const KarmasikSayi &k) //Çıkarma işleminin gerçekleştirildiği fonksiyon.
+{
+	int reel,sanal;
+	reel=reel_kisim - k.reel_kisim;
+	sanal=sanal_kisim - k.sanal_kisim;
+	return KarmasikSayi(reel,sanal);
+}
+
+KarmasikSayi KarmasikSayi::operator * (const KarmasikSayi &k) //Çarpma işleminin gerçekleştirildiği fonksiyon.
+{
+	int reel,sanal;
+	reel=reel_kisim * k.reel_kisim;
+	sanal=sanal_kisim * k.sanal_kisim;
+	return KarmasikSayi(reel,sanal);
+}
+
+KarmasikSayi KarmasikSayi::operator / (const KarmasikSayi &k) //Bölme işleminin gerçekleştirildiği fonksiyon.
+{
+	int reel,sanal;
+	reel=reel_kisim / k.reel_kisim;
+	sanal=sanal_kisim / k.sanal_kisim;
+	return KarmasikSayi(reel,sanal);
+}
+
+KarmasikSayi& KarmasikSayi::operator = (const KarmasikSayi &k) //Atama işleminin gerçekleştirildiği fonksiyon.
+{
+	reel_kisim=k.reel_kisim;
+	sanal_kisim=k.sanal_kisim;
+	return *this;
+}
+
+ostream& operator << (ostream &output,const KarmasikSayi &k) //İlgili karmaşık sayının ekrana yazdırıldığı fonksiyon.
+{
+	output <<"(" <<k.sanal_kisim <<"+" <<k.reel_kisim <<"i)" <<endl;
+	return output;
+}
+
+int main()
+{
+	KarmasikSayi ks1(8,12),ks2(2,3),ks3; //Sınıfın nesneleri oluşturulmaktadır.
+	int secim;
+	cout <<"=Karmasik Sayilarda Dort Islem Programi=\n" <<endl;
+	cout <<"Karmasik Sayi 1:" <<ks1;
+	cout <<"Karmasik Sayi 2:" <<ks2;
+	cout <<"--------------------" <<endl;
+	cout <<"(1) - Toplama Islemi" <<endl;
+	cout <<"(2) - Cikarma Islemi" <<endl;
+	cout <<"(3) - Carpma Islemi" <<endl;
+	cout <<"(4) - Bolme Islemi" <<endl;
+	cout <<"--------------------" <<endl;
+	cout <<"Sonucunu Gormek Istediginiz Islemi Seciniz:";
+	cin >>secim; //Kullanıcıdan işlem seçimi alınmaktadır.
+	
+	if(secim==1) //Kullanıcının 1.işlemi seçmesi halinde if yapısı çalışmaktadır.
+	{
+		ks3=ks1+ks2; //Toplama işlemi yapılmaktadır.
+		cout <<"\nToplama Isleminin Sonucu:" <<ks3 <<endl;
+	}
+	
+	else if(secim==2) //Kullanıcının 2.işlemi seçmesi halinde else-if yapısı çalışmaktadır.
+	{
+		ks3=ks1-ks2; //Çıkarma işlemi yapılmaktadır.
+		cout <<"\nCikarma Isleminin Sonucu:" <<ks3 <<endl;
+	}
+
+	else if(secim==3) //Kullanıcının 3.işlemi seçmesi halinde else-if yapısı çalışmaktadır.
+	{
+		ks3=ks1*ks2; //Çarpma işlemi yapılmaktadır.
+		cout <<"\nCarpma Isleminin Sonucu:" <<ks3 <<endl;
+	}
+
+	else if(secim==4) //Kullanıcının 4.işlemi seçmesi halinde else-if yapısı çalışmaktadır.
+	{
+		ks3=ks1/ks2; //Bölme işlemi yapılmaktadır.
+		cout <<"\nBolme Isleminin Sonucu:" <<ks3 <<endl;
+	}
+
+	else //Kullanıcının yanlış bir işlem seçmesi halinde else yapısı çalışmaktadır.
+	{
+		cout <<"\nBoyle Bir Islem Seceneginiz Bulunmamaktadir!" <<endl;
+	}
+	system("PAUSE");
+	return 0;
+}		
