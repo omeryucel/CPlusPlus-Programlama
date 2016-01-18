@@ -1,0 +1,243 @@
+//Bu Program Kullanıcının Girmiş Olduğu Öğrenciye Ait Bilgileri Bağlantılı Listeye Ekler ve Listenin Üzerinde İşlemler Yapılabilmesini Sağlar.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Ogrenci //Ogrenci sınıfı.
+{
+	string ad,soyad; //Sınıfın private veri üyeleri.
+	long ogrenci_no;
+	double gno;
+	Ogrenci *sonraki;
+	friend class Ogrenci_Listesi; //Ogrenci_Listesi sınıfı arkadaş sınıf olarak kabul edilmektedir.
+public:
+	Ogrenci(string ad,string soyad,long ogrenci_no,double gno) //Sınıf yapıcısı.
+	{
+		this->ad=ad; //Sınıfın private veri üyelerine değer atamaları yapılmaktadır.
+		this->soyad=soyad;
+		this->ogrenci_no=ogrenci_no;
+		this->gno=gno;
+		sonraki=NULL;
+	}
+	const string& isim_getir() const //O andaki nesne işaretçisinin tuttuğu öğrenci ismi döndürülmektedir.
+	{
+		return ad;
+	}
+	const long& ogrenci_no_getir() const  //O andaki nesne işaretçisinin tuttuğu öğrenci numarası döndürülmektedir.
+	{
+		return ogrenci_no;
+	}
+	void yazdir() const //Öğrenci bilgileri ekrana yazdırılmaktadır.
+	{
+		cout <<"--------------------------" <<endl;
+		cout <<"Ad:" <<ad <<" Soyad:" <<soyad <<endl;
+		cout <<"Ogrenci Numarasi:" <<ogrenci_no <<endl;
+		cout <<"GNO:" <<gno <<endl;
+		cout <<"--------------------------" <<endl;
+	}
+};
+
+class Ogrenci_Listesi //Ogrenci_Listesi sınıfı.
+{
+	Ogrenci *liste_basi; //Ogrenci sınıfından liste_basi adlı bir nesne göstericisi oluşturulmaktadır.
+public:
+	Ogrenci_Listesi(); //Sınıfın üye fonksiyonları.
+	~Ogrenci_Listesi();
+	void ekle(string,string,long,double);
+	void ara(const string &);
+	void sil(const long &);
+	void yazdir();
+};
+
+Ogrenci_Listesi::Ogrenci_Listesi() //Sınıf yapıcısı.
+{
+	liste_basi=NULL; //liste_basi'nin adresine NULL değeri atanmaktadır.
+}
+
+Ogrenci_Listesi::~Ogrenci_Listesi() //Sınıf yıkıcısı.
+{
+	Ogrenci *gecici; //Ogrenci sınıfından gecici adlı bir nesne göstericisi oluşturulmaktadır.
+	while(liste_basi!=NULL) //Liste sonuna kadar döngü devam etmektedir.
+	{
+		 gecici=liste_basi;
+		 liste_basi=liste_basi->sonraki;
+		 delete gecici;
+	}
+}
+
+void Ogrenci_Listesi::ekle(string ad,string soyad,long ogrenci_no,double gno) //Listeye öğrenci ekleme fonksiyonu.
+{
+	Ogrenci *simdiki,*onceki,*yeni_ogrenci; //Ogrenci sınıfına ait nesne göstericileri oluşturulmaktadır.
+	yeni_ogrenci=new Ogrenci(ad,soyad,ogrenci_no,gno);
+	if(yeni_ogrenci==NULL)
+		cout <<"Yeni Ogrenci Icin Hafizada Yer Ayrilamadi!" <<endl;
+	if(liste_basi!=NULL) //Liste boş değilse if yapısı çalışmaktadır.
+	{
+		onceki=liste_basi;
+		simdiki=liste_basi->sonraki;
+		while(simdiki!=NULL) //Liste sonuna gelene kadar döngü devam etmektedir.
+		{
+			onceki=simdiki;
+			simdiki=simdiki->sonraki;
+		}
+		onceki->sonraki=yeni_ogrenci; //Yeni öğrenci listeye eklenmektedir.
+	}
+	else
+		liste_basi=yeni_ogrenci; //Listenin boş olması durumunda yeni öğrenci listeye ilk öğrenci olarak eklenmektedir.
+}
+
+void Ogrenci_Listesi::ara(const string &ad) //Listede öğrenci arama fonksiyonu.
+{
+	Ogrenci *simdiki=liste_basi; //liste_basi'nin adresi, simdiki adlı nesne göstericisine atanmaktadır.
+	if(liste_basi!=NULL) //Liste boş değilse if yapısı çalışmaktadır.
+	{
+		while( simdiki!=NULL && ad!=simdiki->isim_getir() ) //Listede aranan öğrencinin olup olmadığı tespit edilmektedir.
+			simdiki=simdiki->sonraki;
+		
+		if(simdiki!=NULL)
+			cout <<"Aradiginiz Ogrenci Listede Bulunmaktadir." <<endl;
+		else
+			cout <<"Listede " <<ad <<" Isimli Bir Ogrenci Bulunmamaktadir." <<endl;
+	}
+	else
+		cout <<"Listede Hicbir Ogrenci Kayitli Degildir!" <<endl;
+}
+
+void Ogrenci_Listesi::sil(const long &ogrenci_no) //Listeden öğrenci silme fonksiyonu.
+{
+	Ogrenci *simdiki,*onceki; //Ogrenci sınıfına ait nesne göstericileri oluşturulmaktadır.
+	if(liste_basi!=NULL) //Liste boş değilse if yapısı çalışmaktadır.
+	{
+		if( ogrenci_no==liste_basi->ogrenci_no_getir() ) //Listeden silinmek istenen öğrenci listenin başındaki öğrenci ise if yapısı çalışmaktadır.
+		{
+			 onceki=liste_basi;
+			 liste_basi=liste_basi->sonraki;
+			 delete onceki;
+		}
+		else
+		{
+			onceki=liste_basi;
+			simdiki=liste_basi->sonraki;
+			while( simdiki!=NULL && ogrenci_no!=simdiki->ogrenci_no_getir() ) //Listeden silinmek istenen öğrencinin listedeki yeri tespit edilmektedir.
+			{
+				onceki=simdiki;
+				simdiki=simdiki->sonraki;
+			}
+			if(simdiki==NULL)
+			{
+				cout <<"Listede " <<ogrenci_no <<" Ogrenci Numarali Bir Ogrenci Kayitli Degildir." <<endl;
+				return; //Fonksiyondan çıkılmaktadır.
+			}
+			onceki->sonraki=simdiki->sonraki;
+			delete simdiki;
+		}
+	}
+	else
+		cout <<"Listede Hicbir Ogrenci Kayitli Degildir!" <<endl;
+}
+
+void Ogrenci_Listesi::yazdir() //Listedeki öğrencileri ekrana yazdırma fonksiyonu.
+{
+	Ogrenci *gecici; //Ogrenci sınıfından gecici adlı bir nesne göstericisi oluşturulmaktadır.
+	if(liste_basi!=NULL) //Liste boş değilse if yapısı çalışmaktadır.
+	{
+	   	gecici=liste_basi;
+	   	while(gecici!=NULL) //Liste sonuna gelene kadar döngü devam etmektedir.
+	   	{
+			gecici->yazdir();
+			gecici=gecici->sonraki;
+	   	}
+	}
+   	else
+	  	cout <<"Listede Hicbir Ogrenci Kayitli Degildir!" <<endl;
+}
+
+int main()
+{
+	Ogrenci_Listesi liste;
+	int secim;
+	do
+	{
+		cout <<"\n=Baglantili Liste Programi=" <<endl;
+		cout <<"---------------------------" <<endl;
+		cout <<"(1) - Ogrenci Ekleme" <<endl;
+		cout <<"(2) - Ogrenci Arama" <<endl;
+		cout <<"(3) - Ogrenci Silme" <<endl;
+		cout <<"(4) - Ogreci Goruntuleme" <<endl;
+		cout <<"(0) - Cikis" <<endl;
+		cout <<"---------------------------" <<endl;
+		cout <<"Yapmak Istediginiz Islemi Seciniz:";
+		cin >>secim; //Kullanıcıdan seçimi alınmaktadır.
+		switch(secim)
+		{
+			case 0:
+			{
+				system("CLS");
+				secim==0;
+				break;
+			}
+			case 1:
+			{
+				system("CLS");
+				cout <<"-Ogrenci Ekleme-" <<endl;
+				cout <<"----------------\n" <<endl;
+				string ad,soyad;
+				long ogrenci_no;
+				double gno;
+				cout <<"Listeye Eklemek Istediginiz Ogrencinin Bilgilerini Giriniz.\n" <<endl;
+				cout <<"Ad:";
+				cin >>ad;
+				cout <<"Soyad:";
+				cin >>soyad;
+				cout <<"Ogrenci No:";
+				cin >>ogrenci_no;
+				cout <<"GNO:";
+				cin >>gno;
+				liste.ekle(ad,soyad,ogrenci_no,gno);
+				break;
+			}
+			case 2:
+			{
+				system("CLS");
+				cout <<"-Ogrenci Arama-" <<endl;
+				cout <<"---------------\n" <<endl;
+				string ad;
+				cout <<"Listede Aramak Istediginiz Ogrencinin Adini Giriniz:";
+				cin >>ad;
+				liste.ara(ad);
+				break;
+			}
+			case 3:
+			{
+				system("CLS");
+				cout <<"-Ogrenci Silme-" <<endl;
+				cout <<"---------------\n" <<endl;
+				long ogrenci_no;
+				cout <<"Listeden Silmek Istediginiz Ogrencinin Ogrenci Numarasini Giriniz:";
+				cin >>ogrenci_no;
+				liste.sil(ogrenci_no);
+				break;
+			}
+			case 4:
+			{
+				system("CLS");
+				cout <<"-Ogrenci Goruntuleme-" <<endl;
+				cout <<"---------------------\n" <<endl;
+				liste.yazdir();
+				break;
+			}
+			default:
+			{
+				system("CLS");
+				cout <<"\nHatali Secim Yaptiniz. Tekrar Secim Yapiniz." <<endl;
+				break;
+			}
+		}
+	}
+	while(secim!=0); //secim 0 olmadığı müddetçe döngü devam etmektedir.
+	
+	cout <<"\n";
+	system("PAUSE");
+	return 0;
+}
